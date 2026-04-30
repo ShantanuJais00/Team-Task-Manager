@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
@@ -52,8 +52,8 @@ const Dashboard = () => {
     const fetchDashboardData = async () => {
       try {
         const [projectsRes, tasksRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/projects'),
-          axios.get('http://localhost:5000/api/tasks')
+          api.get('/projects'),
+          api.get('/tasks')
         ]);
         setProjects(projectsRes.data);
         setTasks(tasksRes.data);

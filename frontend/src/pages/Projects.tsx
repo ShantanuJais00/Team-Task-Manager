@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
@@ -25,7 +25,7 @@ const Projects = () => {
 
   const fetchProjects = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/projects');
+      const { data } = await api.get('/projects');
       setProjects(data);
     } catch {
       toast.error('Failed to load projects');
@@ -36,7 +36,7 @@ const Projects = () => {
 
   const fetchUsers = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/users');
+      const { data } = await api.get('/users');
       setUsers(data.filter((u: any) => u._id !== user?._id));
     } catch { /* silent */ }
   };
@@ -44,7 +44,7 @@ const Projects = () => {
   const handleCreateProject = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/projects', newProject);
+      await api.post('/projects', newProject);
       toast.success('Project created!');
       setShowModal(false);
       setNewProject({ title: '', description: '', members: [] });

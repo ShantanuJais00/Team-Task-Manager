@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
@@ -24,8 +24,8 @@ const ProjectDetail = () => {
   const fetchAll = async () => {
     try {
       const [pRes, tRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/projects/${id}`),
-        axios.get(`http://localhost:5000/api/tasks?project=${id}`)
+        api.get(`/projects/${id}`),
+        api.get(`/tasks?project=${id}`)
       ]);
       setProject(pRes.data);
       setTasks(tRes.data);
@@ -39,7 +39,7 @@ const ProjectDetail = () => {
   const createTask = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/tasks', { ...newTask, project: id });
+      await api.post('/tasks', { ...newTask, project: id });
       toast.success('Task created!');
       setShowTaskModal(false);
       setNewTask({ title: '', description: '', status: 'To Do', priority: 'Medium' });
@@ -51,7 +51,7 @@ const ProjectDetail = () => {
 
   const moveTask = async (taskId: string, newStatus: string) => {
     try {
-      await axios.put(`http://localhost:5000/api/tasks/${taskId}`, { status: newStatus });
+      await api.put(`/tasks/${taskId}`, { status: newStatus });
       fetchAll();
     } catch (err: any) {
       toast.error(err.response?.data?.message || 'Not authorized');

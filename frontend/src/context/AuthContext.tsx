@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import axios from 'axios';
 
 interface User {
   _id: string;
@@ -36,15 +35,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
     localStorage.removeItem('userInfo');
   };
-
-  // Configure axios defaults
-  useEffect(() => {
-    if (user?.token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
-    } else {
-      delete axios.defaults.headers.common['Authorization'];
-    }
-  }, [user]);
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
