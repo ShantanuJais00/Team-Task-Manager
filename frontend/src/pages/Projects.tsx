@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api/axios';
 import toast from 'react-hot-toast';
@@ -8,7 +8,7 @@ import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
-import { FolderOpen, Plus, Users, AlertCircle } from 'lucide-react';
+import { FolderOpen, Plus, Users } from 'lucide-react';
 
 const Projects = () => {
   const [projects, setProjects] = useState<any[]>([]);
