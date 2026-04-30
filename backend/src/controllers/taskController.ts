@@ -45,9 +45,6 @@ export const getTasks = async (req: AuthRequest, res: Response) => {
       query.project = projectId;
     }
     
-    // Additional access control could be implemented here to only return tasks for projects the user has access to.
-    // For simplicity, we assume if they can reach this endpoint they get the tasks (but we could filter).
-    
     const tasks = await Task.find(query)
       .populate('assignee', 'name email')
       .populate('project', 'title');
@@ -85,7 +82,6 @@ export const updateTask = async (req: AuthRequest, res: Response) => {
     const project: any = task.project;
 
     // Check permissions
-    // Assignee can update status. Project owner/Admin can update anything.
     const isAssignee = task.assignee?.toString() === req.user?._id.toString();
     const isOwner = project.owner.toString() === req.user?._id.toString();
     const isAdmin = req.user?.role === 'Admin';
