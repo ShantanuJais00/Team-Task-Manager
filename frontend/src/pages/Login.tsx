@@ -43,12 +43,6 @@ const Login = () => {
           <p className="text-text-muted mt-2">Sign in to manage your tasks</p>
         </div>
 
-        {error && (
-          <div className="bg-red-50 text-red-500 p-4 rounded-lg mb-6 text-sm">
-            {error}
-          </div>
-        )}
-
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-text mb-2">Email</label>

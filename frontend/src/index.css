@@ -1,22 +1,55 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #aa3bff;
+  --color-primary: #8b5cf6;
+  --color-primary-dark: #7c3aed;
   --color-background: #ffffff;
-  --color-surface: #f4f3ec;
-  --color-text: #08060d;
-  --color-text-muted: #6b6375;
+  --color-surface: #f8fafc;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
+  --color-border: #e2e8f0;
 }
 
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --color-background: #16171d;
-    --color-surface: #1f2028;
-    --color-text: #f3f4f6;
-    --color-text-muted: #9ca3af;
-  }
+:root {
+  --bg: #ffffff;
+  --surface: #f8fafc;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+}
+
+html.dark {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #334155;
+  
+  /* Override tailwind theme colors manually for the dark class */
+  --color-background: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
 }
 
 body {
-  @apply bg-background text-text antialiased;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  @apply antialiased transition-colors duration-300;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
 }

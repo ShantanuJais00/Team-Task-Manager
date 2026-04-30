@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { CheckSquare } from 'lucide-react';
 
@@ -9,7 +10,6 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState<'Admin' | 'Member'>('Member');
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
   const navigate = useNavigate();
@@ -18,7 +18,6 @@ const Register = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
 
     try {
       const { data } = await axios.post('http://localhost:5000/api/auth/register', {
@@ -28,9 +27,10 @@ const Register = () => {
         role,
       });
       login(data);
+      toast.success('Account created successfully!');
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Something went wrong');
+      toast.error(err.response?.data?.message || 'Something went wrong');
     } finally {
       setLoading(false);
     }
@@ -46,12 +46,6 @@ const Register = () => {
           <h2 className="text-2xl font-bold text-text">Create Account</h2>
           <p className="text-text-muted mt-2">Join to manage your team's tasks</p>
         </div>
-
-        {error && (
-          <div className="bg-red-50 text-red-500 p-4 rounded-lg mb-6 text-sm">
-            {error}
-          </div>
-        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
