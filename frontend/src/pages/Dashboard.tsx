@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
-import { Avatar, AvatarFallback } from '../components/ui/avatar';
 import { 
   FolderOpen, 
   CheckSquare, 
@@ -82,11 +81,6 @@ const Dashboard = () => {
       .reverse()
       .slice(0, 5);
   }, [tasks]);
-
-  const getInitials = (name: string) => {
-    if (!name) return "?";
-    return name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
-  }
 
   if (loading) {
     return (
